@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CurrencyRateErrorResponseDto {
   @ApiProperty({
@@ -12,4 +12,9 @@ export class CurrencyRateErrorResponseDto {
     description: 'Error message',
   })
   message: string;
+
+  @ApiPropertyOptional({
+    description: 'Object with additional error details',
+  })
+  errors?: string;
 }

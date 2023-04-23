@@ -2,9 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { AverageRateResponse } from './dto/average-rate-response.dto';
 import { AverageRateDto } from './dto/average-rate.dto';
-import { MinMaxRateDto } from './dto/min-max-rate.dto';
-
-const urlAverageRate = 'http://api.nbp.pl/api/exchangerates/rates/A/';
+import { QuotationsRateDto } from './dto/qoutations-rate.dto';
+import { urlAverageRate, urlExchangeRate } from 'src/common/constants';
 
 @Injectable()
 export class CurrencyRatesService {
@@ -15,15 +14,14 @@ export class CurrencyRatesService {
     const { data } = await this.httpService.axiosRef.get(
       `${urlAverageRate}${currencyCode}/${date}/`,
     );
-    const { code, rates } = data;
     return {
-      code,
-      effectiveDate: rates[0].effectiveDate,
-      averageRate: rates[0].mid,
+      currencyCode,
+      effectiveDate: date,
+      averageRate: data.rates[0].mid,
     };
   }
 
-  async getMinMaxRate(dto: MinMaxRateDto) {
+  async getMinMaxRate(dto: QuotationsRateDto) {
     const { quotations, currencyCode } = dto;
     const { data } = await this.httpService.axiosRef.get(
       `${urlAverageRate}${currencyCode}/last/${quotations}/`,
@@ -39,5 +37,24 @@ export class CurrencyRatesService {
     const minAverageRate = Math.min(...averagesRate);
 
     return { maxAverageRate, minAverageRate };
+  }
+
+  async getMajorDifference(dto: QuotationsRateDto) {
+    const { quotations, currencyCode } = dto;
+    const { data } = await this.httpService.axiosRef.get(
+      `${urlExchangeRate}${currencyCode}/last/${quotations}/`,
+    );
+
+    const buyRates = data.rates.map((rate) => rate.bid);
+    const askRates = data.rates.map((rate) => rate.ask);
+
+    const differences = askRates.map((askRate, i) => askRate - buyRates[i]);
+    const maxDifference = Math.max(...differences).toFixed(4);
+
+    return {
+      currencyCode,
+      quotations,
+      majorDifference: maxDifference,
+    };
   }
 }

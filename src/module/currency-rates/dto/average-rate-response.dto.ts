@@ -11,7 +11,7 @@ export class AverageRateResponse {
     description: 'Currency code',
     example: 'USD',
   })
-  code: string;
+  currencyCode: string;
 
   @ApiProperty({
     description: 'Currency code',

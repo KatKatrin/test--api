@@ -10,8 +10,9 @@ import {
 import { AverageRateDto } from './dto/average-rate.dto';
 import { CurrencyRateErrorResponseDto } from './dto/currency-rates-error-response.dto';
 import { AverageRateResponse } from './dto/average-rate-response.dto';
-import { MinMaxRateDto } from './dto/min-max-rate.dto';
+import { QuotationsRateDto } from './dto/qoutations-rate.dto';
 import { MinMaxRateResponse } from './dto/min-max-rate-response.dto';
+import { DifferenceRateResponseDto } from './dto/difference-rate-ressponse.dto';
 
 @ApiTags('Currency-rates')
 @ApiInternalServerErrorResponse({
@@ -29,7 +30,7 @@ export class CurrencyRatesController {
   @ApiBody({
     type: AverageRateDto,
     required: true,
-    description: 'date and currency rate',
+    description: 'Date and currency rate',
   })
   @ApiOkResponse({
     description: 'Getting average currency rate',
@@ -41,17 +42,30 @@ export class CurrencyRatesController {
   }
 
   @ApiBody({
-    type: MinMaxRateDto,
+    type: QuotationsRateDto,
     required: true,
-    description: 'quotations and currency rate',
+    description: 'Quotations and currency rate',
   })
   @ApiOkResponse({
     description: 'Getting min/max average currency rate',
     type: MinMaxRateResponse,
   })
   @Post('/min-max-rate')
-  getMinMaxRate(@Body() dto: MinMaxRateDto): Promise<object> {
-    console.log('innnnnnnnnnnnnnnnnnnnnnn')
+  getMinMaxRate(@Body() dto: QuotationsRateDto) {
     return this.currencyRatesService.getMinMaxRate(dto);
+  }
+
+  @ApiBody({
+    type: QuotationsRateDto,
+    required: true,
+    description: 'Quotations and currency rate',
+  })
+  @ApiOkResponse({
+    description: 'The major difference between the buy and ask rate',
+    type: DifferenceRateResponseDto,
+  })
+  @Post('/difference-rate')
+  getMajorDifference(@Body() dto: QuotationsRateDto) {
+    return this.currencyRatesService.getMajorDifference(dto);
   }
 }
