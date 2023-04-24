@@ -37,10 +37,11 @@ $ npm run test
 $ npm run test:cov
 ```
 
-## Swager
+## Swagger
 
 This API is documented using Swagger.After running API you can find the Swagger documentation at
 http://${host}:${port}/api#/
+
 Example: http://localhost:3000/api#/
 
 ## Building docker image
