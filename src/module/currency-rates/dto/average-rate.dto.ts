@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDateString, IsNotEmpty } from 'class-validator';
+import { IsDateString, IsNotEmpty, Length } from 'class-validator';
 
 export class AverageRateDto {
   @ApiProperty({
@@ -15,5 +15,6 @@ export class AverageRateDto {
     example: 'USD',
   })
   @IsNotEmpty()
+  @Length(3, 3)
   currencyCode: string;
 }

@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, Min, Max, IsInt } from 'class-validator';
+import { IsNotEmpty, Min, Max, IsInt, Length } from 'class-validator';
 
 export class QuotationsRateDto {
   @ApiProperty({
@@ -17,5 +17,6 @@ export class QuotationsRateDto {
     example: 'USD',
   })
   @IsNotEmpty()
+  @Length(3, 3)
   currencyCode: string;
 }

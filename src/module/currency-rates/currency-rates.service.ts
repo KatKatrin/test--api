@@ -3,7 +3,7 @@ import { HttpService } from '@nestjs/axios';
 import { AverageRateResponse } from './dto/average-rate-response.dto';
 import { AverageRateDto } from './dto/average-rate.dto';
 import { QuotationsRateDto } from './dto/qoutations-rate.dto';
-import { urlAverageRate, urlExchangeRate } from 'src/common/constants';
+import { urlAverageRate, urlExchangeRate } from '../../common/constants';
 
 @Injectable()
 export class CurrencyRatesService {

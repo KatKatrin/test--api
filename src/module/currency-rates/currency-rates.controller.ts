@@ -1,5 +1,4 @@
 import { Controller, Post, Body } from '@nestjs/common';
-import { CurrencyRatesService } from './currency-rates.service';
 import {
   ApiBody,
   ApiOkResponse,
@@ -7,6 +6,7 @@ import {
   ApiNotFoundResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { CurrencyRatesService } from './currency-rates.service';
 import { AverageRateDto } from './dto/average-rate.dto';
 import { CurrencyRateErrorResponseDto } from './dto/currency-rates-error-response.dto';
 import { AverageRateResponse } from './dto/average-rate-response.dto';
